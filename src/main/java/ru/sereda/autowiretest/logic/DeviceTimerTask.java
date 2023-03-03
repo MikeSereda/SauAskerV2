@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.sereda.autowiretest.services.ExceptionService;
 import ru.sereda.autowiretest.services.ParametersService;
-import ru.sereda.autowiretest.connectors.Connector;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -87,15 +86,11 @@ public class DeviceTimerTask extends TimerTask {
 
     public void executingBody(){
         if (!sleep){
-//            count++;
             long lastQueryUptime = System.currentTimeMillis();
             Map<String,Object> valuesMap;
             if (device.getConnector()!=null){
                 valuesMap = device.getValues();
-//                if (count % 10 == 0){
-//                    System.out.println("exception time");
-//                    throw new RuntimeException("test exception",new Exception());
-//                }
+
             }
             else {
                 valuesMap = new HashMap<>();

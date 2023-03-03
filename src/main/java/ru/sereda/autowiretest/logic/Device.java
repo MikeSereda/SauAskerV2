@@ -1,7 +1,6 @@
 package ru.sereda.autowiretest.logic;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.sereda.autowiretest.connectors.CDM570LTelnetConnector;
 import ru.sereda.autowiretest.connectors.Connector;
 
 import java.util.Map;
@@ -37,6 +36,8 @@ public class Device {
     private String password2;
     private String login3;
     private String password3;
+    private float exEbNo = 0;
+    private float exEbNoRemote = 0;
     public Device(String id, String ip, int port, String description, String location) {
         this.id = id;
         this.ip = ip;
@@ -52,6 +53,16 @@ public class Device {
     @JsonIgnore
     public Map<String,Object> getValues(){
         Map<String,Object> values = connector.getValues();
+        if (values.containsKey("eb_no")){
+            float exEbNoNew = (float)values.get("eb_no");
+            values.put("eb_no_delta",exEbNo-exEbNoNew);
+            exEbNo = exEbNoNew;
+        }
+        if (values.containsKey("eb_no_remote")){
+            float exEbNoRemoteNew = (float)values.get("eb_no_remote");
+            values.put("eb_no_remote_delta",exEbNoRemote-exEbNoRemoteNew);
+            exEbNoRemote=exEbNoRemoteNew;
+        }
         values.put("deviceProtocol",this.connector.getProtocol());
         values.put("connectorType",this.connector.getConnectorType());
         return values;
