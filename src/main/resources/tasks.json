@@ -1,0 +1,29 @@
+[
+  {
+    "name" : "task1",
+    "sleepState" : false,
+    "interval" : 1000,
+    "deviceIp" : "192.168.100.111",
+    "port" : 23
+  },
+  {
+    "name" : "task2",
+    "sleepState" : false,
+    "interval" : 1000,
+    "deviceIp" : "192.168.100.112"
+  },
+  {
+    "name" : "task3",
+    "sleepState" : true,
+    "interval" : 1000,
+    "deviceIp" : "192.168.100.113",
+    "port" : 22
+  },
+  {
+    "name" : "task4",
+    "sleepState" : false,
+    "interval" : 3000,
+    "deviceIp" : "192.168.100.114",
+    "port" : 22
+  }
+]

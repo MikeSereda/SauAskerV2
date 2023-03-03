@@ -1,0 +1,4 @@
+Devices:
+  add - "POST /devices"
+  show - "GET /devices"
+  showOne - "GET /devices/{deviceId}"
