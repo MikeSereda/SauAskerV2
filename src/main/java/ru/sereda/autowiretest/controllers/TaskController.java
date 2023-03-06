@@ -17,7 +17,7 @@ public class TaskController{
     TaskService taskService;
 
     @GetMapping("/gosleep")
-    public void goSleeptASK(@RequestParam(name = "taskId", defaultValue = "") String taskId){
+    public void goSleepTask(@RequestParam(name = "taskId", defaultValue = "") String taskId){
         taskService.goSleep(taskId);
     }
 
@@ -41,7 +41,7 @@ public class TaskController{
         return taskService.getTaskOptional(taskId).orElse(null);
     }
 
-    @PostMapping("/addTask")
+    @PostMapping("/task")
     public DeviceTimerTask addTask(@RequestBody DeviceTimerTaskDTO task){
         return taskService.addTask(task);
     }
@@ -50,6 +50,15 @@ public class TaskController{
     public ResponseEntity<DeviceTimerTask> removeTask(@RequestParam(name = "taskId", defaultValue = "") String taskId){
         if (taskService.removeTask(taskId)){
             return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/device_tasks")
+    public ResponseEntity<String> removeTasksOfDevice(@RequestParam(name = "deviceId", defaultValue = "") String deviceId){
+        int removedCount = taskService.removeTasksWhereDevice(deviceId);
+        if (removedCount>0){
+            return new ResponseEntity<>("removed "+removedCount+" tasks",HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
