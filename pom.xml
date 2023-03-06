@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>ru.sereda</groupId>
 	<artifactId>askerv2</artifactId>
-	<version>2.0.1</version>
+	<version>3.0.3</version>
 	<name>autowiretest</name>
 	<description>autowiretest</description>
 	<properties>
@@ -57,6 +57,28 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.5.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

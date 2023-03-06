@@ -12,6 +12,7 @@ import ru.sereda.autowiretest.services.TaskService;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/v1/asker")
 public class DevicesController {
     @Autowired
     DeviceService deviceService;
@@ -25,7 +26,7 @@ public class DevicesController {
     }
 
     @GetMapping("/device")
-    public Device getDevice(@RequestParam(name = "deviceId",required = true,defaultValue = "") String deviceId){
+    public Device getDevice(@RequestParam(name = "deviceId", defaultValue = "") String deviceId){
         return deviceService.getDeviceOptional(deviceId).orElse(null);
     }
 
@@ -35,7 +36,7 @@ public class DevicesController {
     }
 
     @DeleteMapping("/device")
-    public ResponseEntity<Device> removeDevice(@RequestParam(name = "deviceId",required = true,defaultValue = "") String deviceId){
+    public ResponseEntity<Device> removeDevice(@RequestParam(name = "deviceId", defaultValue = "") String deviceId){
         if (deviceService.removeDevice(deviceId)){
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -43,11 +44,11 @@ public class DevicesController {
     }
 
     @DeleteMapping("/device_tasks/{deviceId}")
-    public ResponseEntity<String> removeTasksOfDevice(@RequestParam(name = "deviceId",required = true,defaultValue = "") String deviceId){
+    public ResponseEntity<String> removeTasksOfDevice(@RequestParam(name = "deviceId", defaultValue = "") String deviceId){
         int removedCount = taskService.removeTasksWhereDevice(deviceId);
         if (removedCount>0){
-            return new ResponseEntity<String>("removed "+removedCount+" tasks",HttpStatus.OK);
+            return new ResponseEntity<>("removed "+removedCount+" tasks",HttpStatus.OK);
         }
-        else return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+        else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

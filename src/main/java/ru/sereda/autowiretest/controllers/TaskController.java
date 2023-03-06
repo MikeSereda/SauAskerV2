@@ -11,18 +11,18 @@ import ru.sereda.autowiretest.services.TaskService;
 import java.util.Map;
 
 @RestController
-public class TaskController {
+@RequestMapping("/api/v1/asker")
+public class TaskController{
     @Autowired
     TaskService taskService;
 
-
     @GetMapping("/gosleep")
-    public void goSleeptASK(@RequestParam(name = "taskId",required = true,defaultValue = "") String taskId){
+    public void goSleeptASK(@RequestParam(name = "taskId", defaultValue = "") String taskId){
         taskService.goSleep(taskId);
     }
 
     @GetMapping("/goawake")
-    public void goAwakeTask(@RequestParam(name = "taskId",required = true,defaultValue = "") String taskId){
+    public void goAwakeTask(@RequestParam(name = "taskId", defaultValue = "") String taskId){
         taskService.goAwake(taskId);
     }
 
@@ -37,7 +37,7 @@ public class TaskController {
     }
 
     @GetMapping("/task")
-    public DeviceTimerTask getTask(@RequestParam(name = "taskId",required = true,defaultValue = "") String taskId){
+    public DeviceTimerTask getTask(@RequestParam(name = "taskId", defaultValue = "") String taskId){
         return taskService.getTaskOptional(taskId).orElse(null);
     }
 
@@ -47,7 +47,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/task")
-    public ResponseEntity<DeviceTimerTask> removeTask(@RequestParam(name = "taskId",required = true,defaultValue = "") String taskId){
+    public ResponseEntity<DeviceTimerTask> removeTask(@RequestParam(name = "taskId", defaultValue = "") String taskId){
         if (taskService.removeTask(taskId)){
             return new ResponseEntity<>(HttpStatus.OK);
         }
