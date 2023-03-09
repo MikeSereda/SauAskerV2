@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .cors().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(pr+"exceptions", pr+"exceptions_list").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers(pr+"**").hasAnyAuthority("SAT_OPERATOR", "SAT_ADMIN", "ADMIN")
                 .requestMatchers(HttpMethod.DELETE,pr+"**").hasAnyAuthority("SAT_ADMIN", "ADMIN")
                 .and()
