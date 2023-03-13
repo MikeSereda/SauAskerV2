@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${db_hostname:localhost}:${db_port:5432}/${db_name:askerv2}
+    username: ${db_user:admin}
+    password: ${db_password:${db.user.default}}
+management:
+  endpoint:
+    integrationgraph:
+      enabled: true
+    scheduledtasks:
+      enabled: true
+    mappings:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - integrationgraph
+          - scheduledtasks
+          - mappings
+db:
+  user:
+    default: ${spring.datasource.username}
+server:
+  port: 0
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7003/eureka
+jwt:
+  token:
+    secret: sau_rest
+    expired: 32400000
