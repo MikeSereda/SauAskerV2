@@ -1,7 +1,9 @@
 spring:
+  application:
+    name: sau_asker
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${db_hostname:localhost}:${db_port:5432}/${db_name:askerv2}
+    url: jdbc:postgresql://${db_hostname:localhost}:${db_port:5432}/${db_name:sau_rest_2023}
     username: ${db_user:admin}
     password: ${db_password:${db.user.default}}
 management:

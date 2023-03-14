@@ -21,7 +21,7 @@ public class ParametersDAO {
             if (valuesMap.containsKey("reachable")){
                 if ((boolean)valuesMap.get("reachable"))
                 {
-                    String sql = "INSERT INTO public.cdm570params(" +
+                    String sql = "INSERT INTO public.parameters(" +
                             "timestamp_wotz, device_id, eb_no," +
                             "eb_no_remote, ber, power_level," +
                             "power_level_increase, rsl, faults," +
@@ -38,7 +38,7 @@ public class ParametersDAO {
                             valuesMap.get("askDelay"), valuesMap.get("eb_no_delta"), valuesMap.get("eb_no_remote_delta"));
                 }
                 else {
-                    String sql = "INSERT INTO public.cdm570params(" +
+                    String sql = "INSERT INTO public.parameters(" +
                             "timestamp_wotz, device_id, delay, reachable) " +
                             "VALUES (?, ?, ?, ?);";
                     jdbcTemplate.update(sql,
@@ -46,7 +46,7 @@ public class ParametersDAO {
                 }
             }
             else {
-                String sql = "INSERT INTO public.cdm570params(" +
+                String sql = "INSERT INTO public.parameters(" +
                         "timestamp_wotz, device_id, delay) " +
                         "VALUES (?, ?, ?);";
                 jdbcTemplate.update(sql,

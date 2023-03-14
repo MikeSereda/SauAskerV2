@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan(basePackages = {"ru.sereda.autowiretest"})
-@PropertySource(value = {"classpath:application.properties"})
+@PropertySource(value = {"classpath:application.yml"})
 public class Config {
 
 }
