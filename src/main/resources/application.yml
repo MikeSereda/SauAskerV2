@@ -28,6 +28,7 @@ db:
     default: ${spring.datasource.username}
 server:
   port: 0
+  forward-headers-strategy: framework
 eureka:
   client:
     service-url:
