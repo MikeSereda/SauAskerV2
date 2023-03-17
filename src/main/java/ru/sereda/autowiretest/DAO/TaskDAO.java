@@ -4,16 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.sereda.autowiretest.AutowiretestApplication;
-import ru.sereda.autowiretest.DAO.mappers.DeviceRowMapper;
 import ru.sereda.autowiretest.DAO.mappers.DeviceTimerTaskRowMapper;
 import ru.sereda.autowiretest.DTO.DeviceTimerTaskDTO;
-import ru.sereda.autowiretest.logic.Device;
 import ru.sereda.autowiretest.logic.DeviceTimerTask;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Repository
 public class TaskDAO {
@@ -65,6 +61,12 @@ public class TaskDAO {
             return task;
         }
         return null;
+    }
+
+    public boolean updateTask(DeviceTimerTask task){
+        String sql = "UPDATE public.tasks SET \"interval\"=?, sleep=? WHERE task_id=?;";
+        int result = jdbcTemplate.update(sql,task.getInterval(), task.isSleep(), task.getName());
+        return result == 1;
     }
 
     public boolean removeTask(String taskId){

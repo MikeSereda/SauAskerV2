@@ -22,9 +22,9 @@ public class TaskService {
     @Autowired
     ApplicationContext context;
 
-    public static Timer mainTaskTimer = new Timer(true);
+    public Timer mainTaskTimer = new Timer(true);
 
-    private Map<String, DeviceTimerTask> taskMap = new HashMap<>();
+    public Map<String, DeviceTimerTask> taskMap = new HashMap<>();
 
 
     @Value("${management.endpoint.integrationgraph.enabled}")
@@ -36,12 +36,12 @@ public class TaskService {
     public void fillTasks(){
         for (DeviceTimerTask task : taskDAO.getTasks().values()){
             taskMap.put(task.getName(),task);
-            mainTaskTimer.schedule(task, 0, task.getInterval());
+            mainTaskTimer.schedule(
+                    task,
+                    0,
+                    task.getInterval()
+            );
         }
-
-
-//        System.out.println(integrationgraph);
-//        System.out.println(expired);
     }
 
     public Map<String, String> reloadTasks(){
@@ -108,17 +108,19 @@ public class TaskService {
     }
 
     public void goAwake(String taskId){
-        Optional<DeviceTimerTask> taskOptional = getTaskOptional(taskId);
-        if (taskOptional.isPresent()){
-            taskOptional.ifPresent(DeviceTimerTask::goAwake);
+        if (taskMap.containsKey(taskId)){
+            DeviceTimerTask task = taskMap.get(taskId);
+            task.goAwake();
+            taskDAO.updateTask(task);
         }
         else System.out.println("task "+taskId+" is not presented");
     }
 
     public void goSleep(String taskId){
-        Optional<DeviceTimerTask> taskOptional = getTaskOptional(taskId);
-        if (taskOptional.isPresent()){
-            taskOptional.ifPresent(DeviceTimerTask::goSleep);
+        if (taskMap.containsKey(taskId)){
+            DeviceTimerTask task = taskMap.get(taskId);
+            task.goSleep();
+            taskDAO.updateTask(task);
         }
         else System.out.println("task "+taskId+" is not presented");
     }

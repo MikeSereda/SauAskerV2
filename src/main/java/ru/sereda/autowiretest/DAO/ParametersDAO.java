@@ -56,4 +56,8 @@ public class ParametersDAO {
 //        else System.out.print("nodbmode: ");
         System.out.println(valuesMap);
     }
+    public void saveParametersNarda(Map<String, Object> valuesMap){
+
+    }
+
 }

@@ -55,12 +55,12 @@ public class Device {
         Map<String,Object> values = connector.getValues();
         if (values.containsKey("eb_no")){
             float exEbNoNew = (float)values.get("eb_no");
-            values.put("eb_no_delta",exEbNo-exEbNoNew);
+            values.put("eb_no_delta",Math.round(10*exEbNoNew-10*exEbNo)/10f);
             exEbNo = exEbNoNew;
         }
         if (values.containsKey("eb_no_remote")){
             float exEbNoRemoteNew = (float)values.get("eb_no_remote");
-            values.put("eb_no_remote_delta",exEbNoRemote-exEbNoRemoteNew);
+            values.put("eb_no_remote_delta",Math.round(10*exEbNoRemoteNew-10*exEbNoRemote)/10f);
             exEbNoRemote=exEbNoRemoteNew;
         }
         values.put("deviceProtocol",this.connector.getProtocol());

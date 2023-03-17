@@ -5,14 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.0.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.sereda</groupId>
 	<artifactId>askerv2</artifactId>
-	<version>3.0.3</version>
-	<name>autowiretest</name>
-	<description>autowiretest</description>
+	<version>0.1b</version>
+	<name>SauAskerV2</name>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

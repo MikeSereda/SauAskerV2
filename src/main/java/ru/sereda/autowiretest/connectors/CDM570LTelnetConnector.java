@@ -1,25 +1,22 @@
 package ru.sereda.autowiretest.connectors;
 
-import ch.qos.logback.core.util.TimeUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Value;
 import ru.sereda.autowiretest.AutowiretestApplication;
 import ru.sereda.autowiretest.communications.telnet.AutoTelnetClient;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.*;
 
 public class CDM570LTelnetConnector implements TelnetConnector{
-    private String devAddress;
+    private final String devAddress;
     private final String ip;
     private final int port;
-    private String protocol;
-    private String login1;
-    private String password1;
-    private String login2;
-    private String password2;
+    private final String protocol;
+    private final String login1;
+    private final String password1;
+    private final String login2;
+    private final String password2;
 
     private boolean offlinemode = AutowiretestApplication.offlinemode;
 
@@ -108,25 +105,13 @@ public class CDM570LTelnetConnector implements TelnetConnector{
             String prefix = response.substring(8,11).toUpperCase();
             String value = response.substring(12).split("\r\n")[0];
             switch (prefix) {
-                case "FLT" -> {
-                    values.put("faults", value);
-                    break;
-                }
-                case "TMP" -> {
-                    values.put("temperature", Integer.valueOf(value));
-                    break;
-                }
-                case "RFO" -> {
-                    values.put("freq_offset", Float.valueOf(value));
-                    break;
-                }
-                case "RSL" -> {
-                    values.put("rsl", Integer.valueOf(value.substring(2)));
-                    break;
-                }
+                case "FLT" -> values.put("faults", value);
+                case "TMP" -> values.put("temperature", Integer.valueOf(value));
+                case "RFO" -> values.put("freq_offset", Float.valueOf(value));
+                case "RSL" -> values.put("rsl", Integer.valueOf(value.substring(2)));
                 case "EBN" -> {
-                    values.put("eb_no", Float.valueOf(value));
-                    break;
+                    if (Float.valueOf(value)>16) values.put("eb_no", Float.valueOf("-1"));
+                    else values.put("eb_no", Float.valueOf(value));
                 }
                 case "BER" -> {
                     if (!value.contains("99999")) {
@@ -134,12 +119,8 @@ public class CDM570LTelnetConnector implements TelnetConnector{
                     } else {
                         values.put("ber", Integer.valueOf(value));
                     }
-                    break;
                 }
-                case "TST" -> {
-                    values.put("test_mode", Integer.valueOf(value));
-                    break;
-                }
+                case "TST" -> values.put("test_mode", Integer.valueOf(value));
                 case "FRM" -> {
                     if (value.contains("0")) {
                         values.put("framing", "Unframed");
@@ -150,7 +131,6 @@ public class CDM570LTelnetConnector implements TelnetConnector{
                     } else {
                         values.put("framing", "unknown");
                     }
-                    break;
                 }
                 case "TXO" -> {
                     if (value.contains("0")) {
@@ -162,32 +142,24 @@ public class CDM570LTelnetConnector implements TelnetConnector{
                     } else {
                         values.put("carrier", "unknown");
                     }
-                    break;
                 }
                 case "PLI" -> {
                     if (!value.contains("x")) {
                         values.put("power_level_increase", Float.valueOf(value));
                     } else {
-                        values.put("power_level_increase", Float.valueOf("99.9"));
+                        values.put("power_level_increase", Float.valueOf("-2"));
                     }
-                    break;
                 }
                 case "REB" -> {
                     if (!value.contains("x")) {
-                        values.put("eb_no_remote", Float.valueOf(value));
+                        if (Float.valueOf(value)>16) values.put("eb_no_remote", Float.valueOf("-1"));
+                        else values.put("eb_no_remote", Float.valueOf(value));
                     } else {
-                        values.put("eb_no_remote", Float.valueOf("88.8"));
+                        values.put("eb_no_remote", Float.valueOf("-2"));
                     }
-                    break;
                 }
-                case "TPL" -> {
-                    values.put("tx_power_level", Float.valueOf(value));
-                    break;
-                }
-                default -> {
-                    System.out.println("!!!!!!!default!!!!!!!");
-                    break;
-                }
+                case "TPL" -> values.put("tx_power_level", Float.valueOf(value));
+                default -> System.out.println("!!!!!!!default!!!!!!!");
             }
         }
         return values;

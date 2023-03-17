@@ -4,10 +4,10 @@ package ru.sereda.autowiretest.DTO;
 public class DeviceTimerTaskDTO {
     private String taskId;
     private boolean sleep;
-    private int interval;
+    private long interval;
     private String deviceId;
 
-    public DeviceTimerTaskDTO(String taskId, boolean sleep, int interval, String deviceId) {
+    public DeviceTimerTaskDTO(String taskId, boolean sleep, long interval, String deviceId) {
         this.taskId = taskId;
         this.sleep = sleep;
         this.interval = interval;
@@ -23,7 +23,7 @@ public class DeviceTimerTaskDTO {
         return sleep;
     }
 
-    public int getInterval() {
+    public long getInterval() {
         return interval;
     }
 
