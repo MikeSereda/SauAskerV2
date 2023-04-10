@@ -90,7 +90,6 @@ public class DeviceTimerTask extends TimerTask {
             Map<String,Object> valuesMap;
             if (device.getConnector()!=null){
                 valuesMap = device.getValues();
-
             }
             else {
                 valuesMap = new HashMap<>();

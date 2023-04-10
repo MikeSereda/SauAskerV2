@@ -17,6 +17,8 @@ public class NardaConnector implements Connector{
     private String protocol;
     private final String connectorType = "Narda";
 
+    private final Map<String, Integer> spectrumConfig = new HashMap<>();
+
     public NardaConnector(String ip, int port) {
         this.ip = ip;
         this.port = port;
@@ -58,6 +60,7 @@ public class NardaConnector implements Connector{
             avg[k-10]=Float.parseFloat(strings[k]);
         }
         valuesMap.put("avgValues", avg);
+        valuesMap.putAll(spectrumConfig);
         return valuesMap;
     }
 
@@ -69,6 +72,10 @@ public class NardaConnector implements Connector{
         valuesMap.put("fSpan", Integer.parseInt(strings[1]));
         valuesMap.put("rbw", Integer.parseInt(strings[2]));
         valuesMap.put("vbw", Integer.parseInt(strings[4]));
+        spectrumConfig.put("fCent", Integer.parseInt(strings[0]));
+        spectrumConfig.put("fSpan", Integer.parseInt(strings[1]));
+        spectrumConfig.put("rbw", Integer.parseInt(strings[2]));
+        spectrumConfig.put("vbw", Integer.parseInt(strings[4]));
         return valuesMap;
     }
 
